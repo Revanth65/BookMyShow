@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-10 col-md-8 col-md-offset-2 col-sm-offset-1">
+            <form [formGroup]="movieForm" (ngSubmit)="onSubmit()">
+
+                <div class="form-group">
+                    <label for="name">MovieName</label>
+                    <input type="text" class="form-control" id="movieName" formControlName="name">
+                </div>
+
+                <div class="form-group">
+                    <label for="cast">Cast</label>
+                    <input type="text" class="form-control" id="cast" formControlName="cast">
+                </div>
+
+
+                <div class="form-group">
+                    <label for="cast">Genre</label>
+                    <input type="text" class="form-control" id="genre" formControlName="genre">
+
+                </div>
+                <div class="form-group">
+                    <label for="cast">Language</label>
+                    <input type="text" class="form-control" id="language" formControlName="language">
+                </div>
+
+                <div>
+                    <h4>Locations</h4>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Location</mat-label>
+                        <mat-select formControlName="locations" multiple>
+                            <mat-option *ngFor="let location of LocationValues" [value]="location">{{location}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <div class="form-group"
+                        *ngFor="let locationControl of movieForm.get('locations').controls; let i=index">
+                        <input type="text" class="form-control" [formControlName]="i">
+                    </div>
+                </div>
+
+                <!-- <span class="help-block" *ngIf="!movieForm.valid && movieForm.touched">
+                    please enter valid data
+                </span> -->
+                <div class="saveBtn">
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions class="cancel">
+    <button type="button" mat-button (click)="onNoClick()">Cancel</button>
+</div>

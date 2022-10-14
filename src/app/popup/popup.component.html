@@ -1,0 +1,37 @@
+<mat-form-field appearance="fill">
+    <mat-label>Select an option</mat-label>
+    <mat-select [(value)]="selected" (selectionChange)="getShowsData($event)">
+
+        <mat-option *ngFor="let location of data.locations" [value]="location.name" [disabled]="!location.available">
+            {{location.name}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+
+<div *ngIf="showsData.length >= 1; else showsNoData">
+    <div *ngFor="let show of showsData">
+        <mat-card class="example-card">
+            <mat-card-title>{{show.theatreName}}, <small>{{show.location}}</small></mat-card-title>
+            <mat-card-subtitle>{{show.price | currency:'INR'}}</mat-card-subtitle>
+            <mat-card-content>
+                <mat-chip-list class="example-chip" cdkDropList cdkDropListOrientation="horizontal">
+                    <mat-chip class="example-box" cdkDrag *ngFor="let timing of show.timings"
+                        [disabled]="!timing.available">
+                        {{timing.time}}
+                    </mat-chip>
+                </mat-chip-list>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+
+<ng-template #showsNoData>
+    <mat-card class="example-card">
+        <mat-card-content>
+            <span>No Cinema Halls avaliable for the Movie</span>
+        </mat-card-content>
+    </mat-card>
+</ng-template>
+<div mat-dialog-actions>
+    <button class="exit" mat-button (click)="onNoClick()">Exit</button>
+</div>
